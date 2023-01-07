@@ -1,6 +1,11 @@
+using BrightsUrl.Web.Services;
+using BrightsUrl.Web.Services.Interfaces;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddTransient<IWebScraperService, WebScraperService>();
 
 var app = builder.Build();
 
