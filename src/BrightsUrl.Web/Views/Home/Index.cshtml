@@ -1,8 +1,44 @@
-﻿@{
+﻿@model HomeViewModel?
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
+<div class="row text-center ">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @using (Html.BeginForm("ProcessUrls", "Home"))
+    {
+            @Html.TextAreaFor(vm => vm.UrlsToProcess, 5, 50, new {style = "width:100% !important;"})
+        <input class="btn btn-primary btn-lg mt-2" type="submit" value="Process"/>
+    }
 </div>
+
+@if (Model?.ProcessedUrls is not null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Url</th>
+                <th scope="col">Title</th>
+                <th scope="col">Status code</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var urlData in Model.ProcessedUrls)
+            {
+                <tr>
+                    <td>@urlData.Url</td>
+                    @if (urlData.Title != null)
+                    {
+                        <td>@urlData.Title</td>
+                    }
+                    else
+                    {
+                        <td>It was not possible to scrape 'title' element</td>
+                    }
+                    <td>@urlData.StatusCode.ToString() (@((int)urlData.StatusCode))</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
