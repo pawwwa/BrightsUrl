@@ -1,4 +1,4 @@
-namespace BrightsUrl.Web.Models
+﻿namespace BrightsUrl.Web.ViewModels
 {
     public class ErrorViewModel
     {
