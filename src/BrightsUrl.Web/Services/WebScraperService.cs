@@ -33,7 +33,7 @@ namespace BrightsUrl.Web.Services
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, $"Error while receiving title from {url}.");
+                logger.LogError(ex, $"Error while receiving title from '{url}' .");
                 throw;
             }
 
@@ -46,7 +46,7 @@ namespace BrightsUrl.Web.Services
                 StatusCode = response.StatusCode
             };
 
-            logger.LogInformation($"Successfully received title {result.Title} from {url}, with status code {result.StatusCode}");
+            logger.LogInformation($"Successfully received title {result.Title} from '{url}', with status code {result.StatusCode}.");
 
             return result;
         }
