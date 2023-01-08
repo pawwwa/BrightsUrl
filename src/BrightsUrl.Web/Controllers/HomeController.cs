@@ -33,7 +33,7 @@ namespace BrightsUrl.Web.Controllers
                 .Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries)
                 .ToList();
 
-            foreach (var url in urls)
+            await Parallel.ForEachAsync(urls, async (url, token) => 
             {
                 if (!Uri.IsWellFormedUriString(url, UriKind.Absolute))
                 {
@@ -43,7 +43,7 @@ namespace BrightsUrl.Web.Controllers
                         Succeeded = false
                     });
 
-                    continue;
+                    return;
                 }
 
                 try
@@ -66,7 +66,7 @@ namespace BrightsUrl.Web.Controllers
                         Succeeded = false
                     });
                 }
-            }
+            });
 
             return View("Index", viewModel);
         }
