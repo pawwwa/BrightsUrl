@@ -7,7 +7,7 @@ namespace BrightsUrl.Web.Services
 {
     public class WebScraperService : IWebScraperService
     {
-        private HttpClient HttpClient { get;  }
+        private HttpClient HttpClient { get; }
 
         public WebScraperService()
         {
@@ -19,7 +19,6 @@ namespace BrightsUrl.Web.Services
 
         public async Task<ScraperResult> ScrapeTitleAndStatusCode(string url)
         {
-
             var response = await HttpClient.GetAsync(url);
 
             var content = await response.Content?.ReadAsStringAsync();

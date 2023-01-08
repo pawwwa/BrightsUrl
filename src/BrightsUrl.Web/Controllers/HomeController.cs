@@ -26,7 +26,7 @@ namespace BrightsUrl.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> ProcessUrls(HomeViewModel viewModel)
         {
-            if(string.IsNullOrEmpty(viewModel.UrlsToProcess))
+            if (string.IsNullOrEmpty(viewModel.UrlsToProcess))
                 return View("Index", viewModel);
 
             var urls = viewModel.UrlsToProcess
@@ -35,7 +35,7 @@ namespace BrightsUrl.Web.Controllers
 
             foreach (var url in urls)
             {
-                if(!Uri.IsWellFormedUriString(url, UriKind.Absolute))
+                if (!Uri.IsWellFormedUriString(url, UriKind.Absolute))
                 {
                     viewModel.ProcessedUrls.Add(new UrlDataViewModel
                     {
@@ -45,7 +45,7 @@ namespace BrightsUrl.Web.Controllers
 
                     continue;
                 }
-                    
+
                 try
                 {
                     var result = await webScraperService.ScrapeTitleAndStatusCode(url);
