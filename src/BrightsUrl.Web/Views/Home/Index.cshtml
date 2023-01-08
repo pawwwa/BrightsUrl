@@ -8,7 +8,7 @@
     <h1 class="display-4">Welcome</h1>
     @using (Html.BeginForm("ProcessUrls", "Home"))
     {
-            @Html.TextAreaFor(vm => vm.UrlsToProcess, 5, 50, new {style = "width:100% !important;"})
+        @Html.TextAreaFor(vm => vm.UrlsToProcess, 5, 50, new {style = "width:100% !important;"})
         <input class="btn btn-primary btn-lg mt-2" type="submit" value="Process"/>
     }
 </div>
@@ -26,18 +26,29 @@
         <tbody>
             @foreach (var urlData in Model.ProcessedUrls)
             {
-                <tr>
-                    <td>@urlData.Url</td>
-                    @if (urlData.Title != null)
-                    {
-                        <td>@urlData.Title</td>
-                    }
-                    else
-                    {
-                        <td>It was not possible to scrape 'title' element</td>
-                    }
-                    <td>@urlData.StatusCode.ToString() (@((int)urlData.StatusCode))</td>
-                </tr>
+                @if (urlData.Succeeded)
+                {
+                    <tr>
+                        <td>@urlData.Url</td>
+                        @if (urlData.Title != null)
+                        {
+                            <td>@urlData.Title</td>
+                        }
+                        else
+                        {
+                            <td>It was not possible to scrape 'title' element</td>
+                        }
+                        <td>@urlData.StatusCode.ToString() (@((int)urlData.StatusCode))</td>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <td style="color: red;">@urlData.Url</td>
+                        <td style="color: red;">Failed to get 'Title' from @urlData.Url </td>
+                        <td/>
+                    </tr>
+                }
             }
         </tbody>
     </table>
