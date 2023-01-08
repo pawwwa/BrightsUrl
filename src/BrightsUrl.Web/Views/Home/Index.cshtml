@@ -5,17 +5,20 @@
 }
 
 <div class="row">
-    <h2 class="display-4">Type your urls here.</h2>
     @using (Html.BeginForm("ProcessUrls", "Home"))
     {
+        <div class="row">
+            <h2 class="col-sm-4" style="font-size: 34px">Type your urls here.</h2>
+            <input class="btn btn-success mt-2 float-end col-sm-2 m-2 ms-auto" type="submit" value="Process" />
+        </div>
+
         @Html.TextAreaFor(vm => vm.UrlsToProcess, 5, 50, new {style = "width:100% !important;"})
-        <input class="btn btn-success btn-lg mt-2 float-end" type="submit" value="Process" />
     }
 </div>
 
 @if (Model?.ProcessedUrls is not null && Model?.ProcessedUrls.Count > 0)
 {
-    <table class="table">
+    <table class="table mt-4">
         <thead>
             <tr>
                 <th scope="col">Url</th>
