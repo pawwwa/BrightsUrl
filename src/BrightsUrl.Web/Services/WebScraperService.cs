@@ -29,7 +29,7 @@ namespace BrightsUrl.Web.Services
 
             try
             {
-                responseContent = await response.Content?.ReadAsStringAsync();
+                responseContent = await response.Content.ReadAsStringAsync();
             }
             catch (Exception ex)
             {
