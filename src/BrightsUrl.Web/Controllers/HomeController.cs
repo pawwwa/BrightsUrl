@@ -31,6 +31,7 @@ namespace BrightsUrl.Web.Controllers
 
             var urls = viewModel.UrlsToProcess
                 .Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries)
+                .Distinct()
                 .ToList();
 
             await Parallel.ForEachAsync(urls, async (url, token) => 
