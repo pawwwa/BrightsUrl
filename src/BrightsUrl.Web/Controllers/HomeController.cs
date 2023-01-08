@@ -26,6 +26,9 @@ namespace BrightsUrl.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> ProcessUrls(HomeViewModel viewModel)
         {
+            if(string.IsNullOrEmpty(viewModel.UrlsToProcess))
+                return View("Index", viewModel);
+
             var urls = viewModel.UrlsToProcess
                 .Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries)
                 .ToList();
