@@ -35,7 +35,18 @@ namespace BrightsUrl.Web.Controllers
 
             foreach (var url in urls)
             {
-                if(Uri.IsWellFormedUriString(url, UriKind.Absolute))
+                if(!Uri.IsWellFormedUriString(url, UriKind.Absolute))
+                {
+                    viewModel.ProcessedUrls.Add(new UrlDataViewModel
+                    {
+                        Url = url,
+                        Succeeded = false
+                    });
+
+                    continue;
+                }
+                    
+                try
                 {
                     var result = await webScraperService.ScrapeTitleAndStatusCode(url);
 
@@ -43,7 +54,16 @@ namespace BrightsUrl.Web.Controllers
                     {
                         Url = url,
                         Title = result.Title,
-                        StatusCode = result.StatusCode
+                        StatusCode = result.StatusCode,
+                        Succeeded = true
+                    });
+                }
+                catch (Exception)
+                {
+                    viewModel.ProcessedUrls.Add(new UrlDataViewModel
+                    {
+                        Url = url,
+                        Succeeded = false
                     });
                 }
             }
