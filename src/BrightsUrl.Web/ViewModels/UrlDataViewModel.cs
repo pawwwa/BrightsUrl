@@ -7,5 +7,6 @@ namespace BrightsUrl.Web.ViewModels
         public string Url { get; set; } = null!;
         public string? Title { get; set; }
         public HttpStatusCode StatusCode { get; set; }
+        public bool Succeeded { get; set; }
     }
 }
