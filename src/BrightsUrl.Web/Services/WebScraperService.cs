@@ -7,30 +7,48 @@ namespace BrightsUrl.Web.Services
 {
     public class WebScraperService : IWebScraperService
     {
+        private readonly ILogger<WebScraperService> logger;
+
         private HttpClient HttpClient { get; }
 
-        public WebScraperService()
+        public WebScraperService(ILogger<WebScraperService> logger)
         {
             HttpClient = new HttpClient()
             {
                 Timeout = TimeSpan.FromSeconds(5)
             };
+
+            this.logger = logger;
         }
 
         public async Task<ScraperResult> ScrapeTitleAndStatusCode(string url)
         {
             var response = await HttpClient.GetAsync(url);
 
-            var content = await response.Content?.ReadAsStringAsync();
+            string responseContent = string.Empty;
 
-            var title = Regex.Match(content, @"\<title\b[^>]*\>\s*(?<Title>[\s\S]*?)\</title\>",
+            try
+            {
+                responseContent = await response.Content?.ReadAsStringAsync();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, $"Error while receiving title from {url}.");
+                throw;
+            }
+
+            var title = Regex.Match(responseContent, @"\<title\b[^>]*\>\s*(?<Title>[\s\S]*?)\</title\>",
                     RegexOptions.IgnoreCase).Groups["Title"].Value;
 
-            return new ScraperResult
+            var result = new ScraperResult
             {
                 Title = title,
                 StatusCode = response.StatusCode
             };
+
+            logger.LogInformation($"Successfully received title {result.Title} from {url}, with status code {result.StatusCode}");
+
+            return result;
         }
 
     }
