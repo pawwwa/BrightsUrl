@@ -54,6 +54,8 @@ namespace BrightsUrl.Web.Controllers
                 }
             });
 
+            viewModel.ProcessedUrls = viewModel.ProcessedUrls.OrderBy(x => x.StatusCode).ToList();
+
             return View("Index", viewModel);
         }
 
