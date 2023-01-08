@@ -33,7 +33,7 @@ namespace BrightsUrl.Web.Services
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, $"Error while receiving title from '{url}' .");
+                logger.LogError(ex, $"Error while receiving title from '{url}'.");
                 throw;
             }
 
