@@ -34,7 +34,7 @@ namespace BrightsUrl.Web.Controllers
                 .Distinct()
                 .ToList();
 
-            await Parallel.ForEachAsync(urls, async (url, token) => 
+            await Parallel.ForEachAsync(urls, async (url, token) =>
             {
                 if (!Uri.IsWellFormedUriString(url, UriKind.Absolute))
                 {
