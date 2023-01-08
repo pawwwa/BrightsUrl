@@ -38,7 +38,7 @@ namespace BrightsUrl.Web.Controllers
             {
                 if (!Uri.IsWellFormedUriString(url, UriKind.Absolute))
                 {
-                    viewModel.ProcessedUrls.Add(UrlDataViewModel.FromError(url));
+                    viewModel.ProcessedUrls.Add(UrlDataViewModel.FromError(url, $"'{url}' is bad url."));
                     return;
                 }
 
@@ -48,9 +48,9 @@ namespace BrightsUrl.Web.Controllers
 
                     viewModel.ProcessedUrls.Add(UrlDataViewModel.FromSuccess(url, result.Title, result.StatusCode));
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    viewModel.ProcessedUrls.Add(UrlDataViewModel.FromError(url));
+                    viewModel.ProcessedUrls.Add(UrlDataViewModel.FromError(url, ex.Message));
                 }
             });
 
